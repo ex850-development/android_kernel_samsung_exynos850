@@ -311,16 +311,6 @@ static inline bool is_page_busy(struct dma_page *page)
 	return page->in_use != 0;
 }
 
-static void pool_free_page(struct dma_pool *pool, struct dma_page *page)
-{
-	dma_addr_t dma = page->dma;
-
-	pool_init_page(pool, page);
-	dma_free_coherent(pool->dev, pool->allocation, page->vaddr, dma);
-	list_del(&page->page_list);
-	kfree(page);
-}
-
 /**
  * dma_pool_destroy - destroys a pool of dma memory blocks.
  * @pool: dma pool that will be destroyed
@@ -350,19 +340,15 @@ void dma_pool_destroy(struct dma_pool *pool)
 		struct dma_page *page;
 		page = list_entry(pool->page_list.next,
 				  struct dma_page, page_list);
-		if (is_page_busy(page)) {
-			if (pool->dev)
-				dev_err(pool->dev,
-					"dma_pool_destroy %s, %p busy\n",
-					pool->name, page->vaddr);
-			else
-				pr_err("dma_pool_destroy %s, %p busy\n",
-				       pool->name, page->vaddr);
-			/* leak the still-in-use consistent memory */
+		if (!is_page_busy(page))
+			dma_free_coherent(pool->dev, pool->allocation,
+							  page->vaddr, page->dma);
+		else
+			dev_err(pool->dev,
+				"dma_pool_destroy %s, %p busy\n",
+				pool->name, page->vaddr);
 			list_del(&page->page_list);
 			kfree(page);
-		} else
-			pool_free_page(pool, page);
 	}
 
 	kfree(pool);
