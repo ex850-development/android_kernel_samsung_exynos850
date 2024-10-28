@@ -188,7 +188,6 @@ asmlinkage void dbg_snapshot_do_dpm(struct pt_regs *regs)
 
 	if (policy && policy != GO_DEFAULT_ID) {
 		if (dss_dpm.pre_log) {
-			pr_emerg("ESR: 0x%08x -- %s\n", esr, esr_get_class_string(esr));
 			pr_emerg("FAR: 0x%016lx\n", far);
 			pr_emerg("Task stack:     [0x%016lx..0x%016lx]\n",
 				tsk_stk, tsk_stk + THREAD_SIZE);

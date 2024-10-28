@@ -1009,6 +1009,8 @@ void secdbg_exin_set_esr(unsigned int esr)
 #ifdef CONFIG_FTRACE
 	set_item_val("ESR", "%s (0x%08x)",
 	esr_get_class_string(esr), esr);
+#else
+	set_item_val("ESR", "%s (0x%08x)", 0);
 #endif
 }
 
