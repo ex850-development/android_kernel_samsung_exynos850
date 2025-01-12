@@ -235,8 +235,6 @@ unsigned long arch_scale_thermal_pressure(int cpu)
 }
 #endif
 
-#endif	/* !CONFIG_SMP */
-
 static inline int task_node(const struct task_struct *p)
 {
 	return cpu_to_node(task_cpu(p));
