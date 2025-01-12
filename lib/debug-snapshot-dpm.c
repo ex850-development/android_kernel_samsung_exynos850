@@ -137,6 +137,7 @@ void dbg_snapshot_do_dpm_policy(unsigned int policy)
 
 asmlinkage void dbg_snapshot_do_dpm(struct pt_regs *regs)
 {
+#ifdef CONFIG_FTRACE
 	unsigned long tsk_stk = (unsigned long)current->stack;
 	unsigned long irq_stk = (unsigned long)this_cpu_read(irq_stack_ptr);
 #ifdef CONFIG_VMAP_STACK
@@ -146,7 +147,6 @@ asmlinkage void dbg_snapshot_do_dpm(struct pt_regs *regs)
 	unsigned long far = read_sysreg(far_el1);
 	unsigned int val = 0;
 	unsigned int policy = 0;
-
 	switch (ESR_ELx_EC(esr)) {
 	case ESR_ELx_EC_DABT_CUR:
 		val = esr & 63;
@@ -201,6 +201,7 @@ asmlinkage void dbg_snapshot_do_dpm(struct pt_regs *regs)
 		}
 		dbg_snapshot_do_dpm_policy(policy);
 	}
+#endif
 }
 static const char *enabled = "enabled";
 static const char *disabled = "disabled";

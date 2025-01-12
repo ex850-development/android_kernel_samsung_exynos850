@@ -20,10 +20,10 @@
  *
  */
 
-#ifndef _KBASE_TRACE_GPU_MEM_H_
-#define _KBASE_TRACE_GPU_MEM_H_
+#ifndef _KBASE_TRACE_GPU_MEM_REAL_H_
+#define _KBASE_TRACE_GPU_MEM_REAL_H_
 
-#ifdef CONFIG_TRACE_GPU_MEM
+#ifdef CONFIG_TRACE_GPU_MEM_REAL
 #include <trace/events/gpu_mem.h>
 #else
 #include "mali_gpu_mem_trace.h"
@@ -98,4 +98,4 @@ void kbase_remove_dma_buf_usage(struct kbase_context *kctx,
 void kbase_add_dma_buf_usage(struct kbase_context *kctx,
 				    struct kbase_mem_phy_alloc *alloc);
 
-#endif /* _KBASE_TRACE_GPU_MEM_H_ */
+#endif /* _KBASE_TRACE_GPU_MEM_REAL_H_ */

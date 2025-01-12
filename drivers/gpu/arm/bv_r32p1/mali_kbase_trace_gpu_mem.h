@@ -19,10 +19,10 @@
  *
  */
 
-#ifndef _KBASE_TRACE_GPU_MEM_H_
-#define _KBASE_TRACE_GPU_MEM_H_
+#ifndef _KBASE_TRACE_GPU_MEM_REAL_H_
+#define _KBASE_TRACE_GPU_MEM_REAL_H_
 
-#if IS_ENABLED(CONFIG_TRACE_GPU_MEM)
+#if IS_ENABLED(CONFIG_TRACE_GPU_MEM_REAL)
 #include <trace/events/gpu_mem.h>
 #endif
 
@@ -31,7 +31,7 @@
 static void kbase_trace_gpu_mem_usage(struct kbase_device *kbdev,
 				      struct kbase_context *kctx)
 {
-#if IS_ENABLED(CONFIG_TRACE_GPU_MEM)
+#if IS_ENABLED(CONFIG_TRACE_GPU_MEM_REAL)
 	lockdep_assert_held(&kbdev->gpu_mem_usage_lock);
 
 	trace_gpu_mem_total(kbdev->id, DEVICE_TGID,
@@ -97,4 +97,4 @@ void kbase_remove_dma_buf_usage(struct kbase_context *kctx,
 void kbase_add_dma_buf_usage(struct kbase_context *kctx,
 				    struct kbase_mem_phy_alloc *alloc);
 
-#endif /* _KBASE_TRACE_GPU_MEM_H_ */
+#endif /* _KBASE_TRACE_GPU_MEM_REAL_H_ */

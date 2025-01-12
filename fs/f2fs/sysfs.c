@@ -244,6 +244,7 @@ static int f2fs_sec_blockops_dbg(struct f2fs_sb_info *sbi, char *buf, int src_le
 /* Copy from debug.c stat_show */
 static ssize_t f2fs_sec_stats_show(struct f2fs_sb_info *sbi, char *buf)
 {
+#ifdef CONFIG_FTRACE
 	struct f2fs_stat_info *si = sbi->stat_info;
 	int i = 0, len = 0;
 	int j;
@@ -423,6 +424,9 @@ static ssize_t f2fs_sec_stats_show(struct f2fs_sb_info *sbi, char *buf)
 	len += f2fs_sec_blockops_dbg(sbi, buf, len);
 #endif
 	return len;
+#else
+	return 0;
+#endif
 }
 
 static void __sec_bigdata_init_value(struct f2fs_sb_info *sbi,
@@ -936,7 +940,9 @@ F2FS_RW_ATTR(FAULT_INFO_TYPE, f2fs_fault_info, inject_type, inject_type);
 #endif
 F2FS_RW_ATTR_640(F2FS_SBI, f2fs_sb_info, sec_gc_stat, sec_stat);
 F2FS_RW_ATTR_640(F2FS_SBI, f2fs_sb_info, sec_io_stat, sec_stat);
+#ifdef CONFIG_FTRACE
 F2FS_RW_ATTR(F2FS_SBI, f2fs_sb_info, sec_stats, stat_info);
+#endif
 F2FS_RW_ATTR_640(F2FS_SBI, f2fs_sb_info, sec_fsck_stat, sec_fsck_stat);
 F2FS_RW_ATTR(F2FS_SBI, f2fs_sb_info, sec_part_best_extents, s_sec_part_best_extents);
 F2FS_RW_ATTR(F2FS_SBI, f2fs_sb_info, sec_part_current_extents, s_sec_part_current_extents);
@@ -1005,7 +1011,9 @@ static struct attribute *f2fs_attrs[] = {
 	ATTR_LIST(extension_list),
 	ATTR_LIST(sec_gc_stat),
 	ATTR_LIST(sec_io_stat),
+#ifdef CONFIG_FTRACE
 	ATTR_LIST(sec_stats),
+#endif
 	ATTR_LIST(sec_fsck_stat),
 	ATTR_LIST(sec_part_best_extents),
 	ATTR_LIST(sec_part_current_extents),
