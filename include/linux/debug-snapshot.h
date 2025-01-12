@@ -154,11 +154,12 @@ static inline int secdbg_show_busy_task(unsigned int cpu, unsigned long long dur
 {
         return -1;
 }
-
+#ifdef CONFIG_DEBUG_KERNEL
 static struct task_struct *get_the_busiest_task(void)
 {
 	return NULL;
 }
+#endif
 #endif
 
 #ifdef CONFIG_OF_RESERVED_MEM
