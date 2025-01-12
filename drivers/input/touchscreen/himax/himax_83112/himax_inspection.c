@@ -2107,78 +2107,9 @@ int hx_get_3x3_noise(int *RAW, int mid_pos_x, int mid_pos_y)
 	ret = sum;
 	return ret;
 }
-int32_t *diag_mutual = NULL;
-extern int32_t *diag_mutual;
 int hx_sensity_test(int *result)
 {
-	int ret = NO_ERR;
-	int *RAW;
-	int i = 0;
-	int j = 0;
-	int index = 0;
-	int datalen = 0;
-	int tx_num = ic_data->HX_TX_NUM;
-	int rx_num = ic_data->HX_RX_NUM;
-	int sens_pt_grp[9][2];
-
-	I("%s:Entering!\n", __func__);
-	/* 1: y, 0:x*/
-	/* have to check array index */
-	sens_pt_grp[6][1] = 3;
-	sens_pt_grp[6][0] = 3;
-	sens_pt_grp[7][1] = tx_num / 2;
-	sens_pt_grp[7][0] = 3;
-	sens_pt_grp[8][1] = tx_num - 4;
-	sens_pt_grp[8][0] = 3;
-
-	sens_pt_grp[3][1] = 3;
-	sens_pt_grp[3][0] = rx_num / 2;
-	sens_pt_grp[4][1] = tx_num / 2;
-	sens_pt_grp[4][0] = rx_num / 2;
-	sens_pt_grp[5][1] = tx_num - 4;
-	sens_pt_grp[5][0] = rx_num / 2;
-
-	sens_pt_grp[0][1] = 3;
-	sens_pt_grp[0][0] = rx_num - 4;
-	sens_pt_grp[1][1] = tx_num / 2;
-	sens_pt_grp[1][0] = rx_num - 4;
-	sens_pt_grp[2][1] = tx_num - 4;
-	sens_pt_grp[2][0] = rx_num - 4;
-
-	datalen = (ic_data->HX_TX_NUM * ic_data->HX_RX_NUM)
-			+ ic_data->HX_TX_NUM + ic_data->HX_RX_NUM;
-	RAW = kzalloc(sizeof(int) * datalen, GFP_KERNEL);
-	/* get one time, but now markup it*/
-	/* ret = hx_get_one_iir(RAW, HIMAX_INSPECTION_RAWDATA, datalen); */
-
-	memcpy(RAW, diag_mutual, sizeof(int) * datalen);
-	if (g_ts_dbg != 0) {
-		for (j = 0; j < ic_data->HX_RX_NUM; j++) {
-			if (j == 0) {
-				printk("      RX%2d", j + 1);
-			} else {
-				printk("  RX%2d", j + 1);
-			}
-		}
-		printk("\n");
-
-		for (i = 0; i < ic_data->HX_TX_NUM; i++) {
-			printk("TX%2d", i + 1);
-			for (j = 0; j < ic_data->HX_RX_NUM; j++) {
-				index = i * j;
-				printk("%5d ", RAW[index]);
-			}
-			printk("\n");
-		}
-	}
-	for (i = 0; i < 9; i++) {
-		input_info(true, g_ts->dev, "now:%d,x=%d,y=%d\n",
-					i, sens_pt_grp[i][0], sens_pt_grp[i][1]);
-		result[i] = hx_get_3x3_noise(RAW, sens_pt_grp[i][0], sens_pt_grp[i][1]);
-	}
-	kfree(RAW);
-	I("%s:End!\n", __func__);
-	return ret;
+	return 0;
 }
 
 #ifdef SEC_FACTORY_MODE
