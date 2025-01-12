@@ -7038,13 +7038,10 @@ compute_energy(struct task_struct *p, int dst_cpu, struct perf_domain *pd)
 	int cpu;
 
 	for (; pd; pd = pd->next) {
-		struct cpumask *pd_mask = perf_domain_span(pd);
-
 		/*
 		 * The energy model mandates all the CPUs of a performance
 		 * domain have the same capacity.
 		 */
-		cpu_cap = arch_scale_cpu_capacity(cpumask_first(pd_mask));
 		max_util = sum_util = 0;
 		/*
 		 * The capacity state of CPUs of the current rd can be driven by
