@@ -12,9 +12,11 @@
 .*
 *.a
 *.asn1.[ch]
+*.bin
 *.bz2
 *.c.[012]*.*
 *.dtb
+*.dtbo
 *.dtb.S
 *.dwo
 *.elf
@@ -38,6 +40,7 @@
 *.so.dbg
 *.su
 *.symtypes
+*.symversions
 *.tab.[ch]
 *.tar
 *.xz
@@ -132,6 +135,22 @@ all.config
 # Kdevelop4
 *.kdev4
 
-# Out Folder for building
-out/
+# fetched Android config fragments
+kernel/configs/android-*.cfg
 
+# Tech package directories
+#techpack/
+
+# Documentation toolchain
+sphinx_*/
+# Scripts
+scripts/build_dtbo
+scripts/build_kernel
+scripts/update_defconfig
+
+out
+gcc-linaro-13.0.0-2022.10-x86_64_aarch64-linux-gnu
+clang
+out
+preparecompiler.sh
+clang.sh
