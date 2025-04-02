@@ -35,13 +35,6 @@
 
 /* Definition of the ntfs sysctl. */
 static struct ctl_table ntfs_sysctls[] = {
-	{
-		.procname	= "ntfs-debug",
-		.data		= &debug_msgs,		/* Data pointer and size. */
-		.maxlen		= sizeof(debug_msgs),
-		.mode		= 0644,			/* Mode, proc handler. */
-		.proc_handler	= proc_dointvec
-	},
 	{}
 };
 
