@@ -115,8 +115,7 @@ static void pool_check_block(struct dma_pool *pool, struct dma_block *block,
 		break;
 	}
 
-	if (!want_init_on_alloc(mem_flags))
-		memset(block, POOL_POISON_ALLOCATED, pool->size);
+	memset(block, POOL_POISON_ALLOCATED, pool->size);
 }
 
 static struct dma_page *pool_find_page(struct dma_pool *pool, dma_addr_t dma)
@@ -170,8 +169,6 @@ static void pool_check_block(struct dma_pool *pool, struct dma_block *block,
 
 static bool pool_block_err(struct dma_pool *pool, void *vaddr, dma_addr_t dma)
 {
-	if (want_init_on_free())
-		memset(vaddr, 0, pool->size);
 	return false;
 }
 
